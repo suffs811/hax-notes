@@ -1,0 +1,1 @@
+Make script that you can copy paste suid file paths to file and it will see if anything exists on gtfo bins

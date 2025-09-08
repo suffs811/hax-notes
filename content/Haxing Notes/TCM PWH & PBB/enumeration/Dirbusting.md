@@ -1,0 +1,8 @@
+- ffuf
+- dirb -X .php 
+	- (asp, aspx, asm, asmx for windows)
+	- (html, js, pdf, xlsx)
+- `echo "domain.com" | waybackurl >> urls.txt`
+- arjun
+- gowitness
+- socialhunter

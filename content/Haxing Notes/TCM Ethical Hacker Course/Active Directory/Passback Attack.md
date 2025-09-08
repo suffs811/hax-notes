@@ -1,0 +1,2 @@
+If there is a printer or other device that uses LDAP and you can find the LDAP settings, change the ip address away from the DC and to your IP, then use **responder** to capture credentials
+ ![Exported image](Exported%20image%2020250424155559-0.png)

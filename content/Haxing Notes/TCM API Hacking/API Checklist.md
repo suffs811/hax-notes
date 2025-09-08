@@ -1,0 +1,51 @@
+### Short list
+- [ ] Find api endpoints
+- [ ] Authentication
+- [ ] BOLA/BFLA
+- [ ] Injection [SQL/NoSQL/CMD]
+- [ ] Mass Assignment
+- [ ] Excessive Data Exposure
+- [ ] SSRF
+- [ ] Chaining Attacks
+### Full list
+- [ ] Find api endpoints
+	- [ ] Fuffing/dirbusting
+	- [ ] Source code
+	- [ ] JS files
+	- [ ] Wfuzz tool
+- [ ] Authentication
+	- [ ] Look for basic auth / bearer tokens / api tokens / JWTs / OAuth tokens
+	- [ ] Brute force credentials if no rate-limiting/WAF protections and it's allowed
+	- [ ] Use Burp Sequencer to identify whether the auth tokens are pseudo-random (i.e. user-<current_time>-000) and can then be guessed/bruteforced/forged
+	- [ ] See if JWTs can be sent without a signature, with a random signature, with edited claims, with algorithm:none, etc.
+	- [ ] If the JWT is HSXXX (NOT RSXXX) use hashcat (`hashcat -a 0 -m 16500 hash.txt /rockyou.txt`) or jwt_tool (`jwt_tool -C -d /rockyou.txt <JWT>`)
+	- [ ] Response Timing attacks for finding correct username
+	- [ ] 
+- [ ] BOLA/BFLA
+	- [ ] BOLA: Check for url params/JSON body that allow you to obtain data you should not have access to (`/v1/users?user=admin`)
+	- [ ] BFLA: See if you can POST (or PUT, PATCH, DELETE) to an endpoint that does a function you should not be able to do, such as delete a user, change a user's name, or reassign a backend database variable
+- [ ] Injection
+	- [ ] SQLi: Check for SQLi anywhere user input is taken, URL params and JSON body
+		- [ ] Use sqlmap or Burp to run extensive tests on an endpoint
+	- [ ] NoSQLi: The backend dbms may be nosql (MongoDB etc), so try nosqli payloads wherever user input is taken (`{"$ne":"0"}`)
+		- [ ] Check out https://github.com/suffs811/my-wordlists.git
+- [ ] Mass Assignment
+	- [ ] Look for backend variables and try to replace the data in them, such as `isAdmin=true`
+	- [ ] Where to find database variables
+		- [ ] Open source code
+		- [ ] JWT claims sections ({"isAdmin":"false"})
+		- [ ] The returned data from an endpoint (i.e. /account or /user etc.)
+	- [ ] Use a POST/PATCH request to update or assign the db variable to your new value
+- [ ] Excessive Data Exposure
+	- [ ] Look for any endpoints that bring back more data (especially sensitive data) than should be sent to the frontend (ex. credit card number, address, SSN, etc.)
+	- [ ] Usually paired with BOLA/BFLA/IDOR
+- [ ] SSRF
+	- [ ] Look for any URL in the body/headers of an HTTP request (using Burp for example)
+	- [ ] Change the URL to an internal/protected endpoint to bypass CORS and authentication
+		- [ ] Ex. Changing the URL to /admin/allusers to get all user info.
+		- [ ] This works because the request is being sent from the server to itself, rather than from you (the client)
+	- [ ] Test whether the endpoint will accept XML instead of JSON in the body
+		- [ ] Change `Content-Type: text/xml`
+		- [ ] Then `<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/hostname">]><root>&xxe;</root>`
+- [ ] Chaining Attacks
+	- [ ] Try to chain attacks (SSRF, mass assignment, BOLA/BFLA, injection) to show an ever greater impact

@@ -1,0 +1,1 @@
+### sudo ldapdomaindump ldaps://<DC_IP> -u 'HOSTNAME\<user>' -p <password>
